@@ -1,0 +1,13 @@
+.grid-container {
+    display: grid;
+}
+
+/* .description {
+    display: flex;
+} */
+
+.description p {
+    display: flex;
+    justify-content: center;
+    
+}
