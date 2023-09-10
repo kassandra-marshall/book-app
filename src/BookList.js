@@ -5,10 +5,10 @@ import './BookList.css'
 
 function BookList() {
     const url = 'https://www.googleapis.com/books/v1/volumes'
-    const proxy = 'https://proxy-server-pi.vercel.app'
-    const apiKey = 'AIzaSyCnss5-w1mmthSuKTkfwMwJkY9OaaxSziQ'
-    const clientID = '647796670729-88lcs5dgigsvi66u0sbe8eai52vf96b3.apps.googleusercontent.com'
-    // const clientSecret = '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'
+    // const proxy = 'https://proxy-server-pi.vercel.app'
+    // const apiKey = process.env.REACT_APP_GOOGLE_BOOKS_API_KEY;
+    // const clientID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+    // const clientSecret = process.env.REACT_APP_GOOGLE_CLIENT_SECRET;
     const [searchTerms, setSearchTerms] = useState("");
     const [searchResults, setSearchResults] = useState([])
 
