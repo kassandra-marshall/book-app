@@ -31,18 +31,7 @@ function BookList(user) {
                 console.log(err)
             });
     }
-    // const results = searchResults.map(item => {
-    //     console.log(item.volumeInfo)
-    //     return {
-    //         id: item.id,
-    //         title: item.volumeInfo.title,
-    //         // authors: (item.volumeInfo.authors).map(author => {return author}),
-    //         authors: item.volumeInfo.authors,
-    //         description: item.volumeInfo.description,
-    //         image: item.volumeInfo.imageLinks.smallThumbnail
-    //     }
-    // })
-    // console.log(results)
+    
     return (
         (user ? (
         <div>
@@ -70,7 +59,8 @@ function BookList(user) {
                                 <div className="description">
                                     <p>{item.volumeInfo.description}</p>
                                 </div>
-                                <a href={item.volumeInfo.infoLink}>View on Google Books</a>
+                                <a href={item.volumeInfo.infoLink} target="_blank" rel="noreferrer">
+                                    View on Google Books</a>
                             </div>
                             
                         )
