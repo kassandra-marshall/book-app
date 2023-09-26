@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom'
 import { useGoogleLogin, googleLogout } from '@react-oauth/google';
 import axios from 'axios';
 import BookList from './components/BookList';
+import Book from './components/Book';
 import './App.css';
 
 
@@ -40,10 +41,24 @@ function App() {
       setProfile(null);
   };
   return (
+    <div>
+        <Routes>
+            <Route exact path="/" element={<BookList />}/>
+            <Route path=":id" element={<Book />}/>
+        </Routes>
+        {/* <BookList />
+        <Book /> */}
+        {/* <Route exact path='/' component={BookList} >
+            <BookList />
+            <Route path=":id" component={Book}>
+                <Book />
+            </Route>
+        </Route> */}
       <div>
-          <h2>React Google Login</h2>
+          <h2>React Google Books</h2>
           <br />
           <br />
+          
           {profile ? (
               <div>
                   <img src={profile.picture} alt="user" />
@@ -52,13 +67,13 @@ function App() {
                   <p>Email Address: {profile.email}</p>
                   <br />
                   <br />
-                  <BookList user={user}/>
                   <button onClick={logOut}>Log out</button>
               </div>
           ) : (
               <button onClick={() => login()}> Sign in with Google 🚀 </button>
           )}
       </div>
+    </div>    
   );
 }
 

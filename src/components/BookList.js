@@ -1,12 +1,14 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import '../BookList.css'
+import { Link } from "react-router-dom";
+// import Book from "./Book";
 
 
-function BookList(user) {
+function BookList() {
     const url = 'https://www.googleapis.com/books/v1/volumes';
     const placeholder = 'https://minalsampat.com/wp-content/uploads/2019/12/book-placeholder.jpg';
-    // const proxy = 'https://proxy-server-pi.vercel.app'
+    // use following in protected booklist component to add features such as saving to libraries
     // const apiKey = process.env.REACT_APP_GOOGLE_BOOKS_API_KEY;
     // const clientID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
     // const clientSecret = process.env.REACT_APP_GOOGLE_CLIENT_SECRET;
@@ -24,7 +26,6 @@ function BookList(user) {
         e.preventDefault()
         axios.get(`${url}?q=${searchTerms}`)
             .then(res => {
-                // console.log(res.data.items)
                 setSearchResults(res.data.items)
             })
             .catch(err => {
@@ -32,8 +33,14 @@ function BookList(user) {
             });
     }
     
+    // const handleClick = (e) => {
+    //     e.preventDefault();
+    //     // call book component and go to book link
+    //     <Book />
+    // }
+
     return (
-        (user ? (
+        
         <div>
             <form onSubmit={(e) => handleSubmit(e)}>
                 <label>
@@ -46,16 +53,19 @@ function BookList(user) {
                 />
                 <button>Search</button>
             </form>
+            {searchResults ? (
             <div className="grid-container">
                 <ul>
                     {searchResults.map(item => {
                         return (
                             <div key={item.id} className="grid-item">
-                                <li>{item.volumeInfo.title}</li>
+                                <Link to={`${item.id}`}>
+                                    <li>{item.volumeInfo.title}</li>
+                                </Link>
                                 {item.volumeInfo.imageLinks === undefined ?
                                 <img src={placeholder} style={{height: 192, width: 128}} alt="generic-thumbnail"/> : 
                                 <img src={item.volumeInfo.imageLinks.thumbnail} alt="thumbnail"/>}
-                                {/* <p>{item.volumeInfo.authors}</p> */}
+                                <p>By: {(item.volumeInfo.authors).join(", ")}</p>
                                 <div className="description">
                                     <p>{item.volumeInfo.description}</p>
                                 </div>
@@ -67,9 +77,9 @@ function BookList(user) {
                     })}
                 </ul>   
             </div>
-            
+            ) : null}
         </div>
-        ) : null )
+
     )
 }
 
