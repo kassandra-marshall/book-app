@@ -54,29 +54,31 @@ function BookList() {
                 <button>Search</button>
             </form>
             {searchResults ? (
-            <div className="grid-container">
                 <ul>
                     {searchResults.map(item => {
                         return (
-                            <div key={item.id} className="grid-item">
-                                <Link to={`${item.id}`}>
-                                    <li>{item.volumeInfo.title}</li>
-                                </Link>
-                                {item.volumeInfo.imageLinks === undefined ?
-                                <img src={placeholder} style={{height: 192, width: 128}} alt="generic-thumbnail"/> : 
-                                <img src={item.volumeInfo.imageLinks.thumbnail} alt="thumbnail"/>}
-                                <p>By: {(item.volumeInfo.authors).join(", ")}</p>
+                            <div className="grid-container">
+
+                                <div key={item.id} className="main">
+                                    <Link to={`${item.id}`}>
+                                        <li>{item.volumeInfo.title}</li>
+                                    </Link>
+                                    {item.volumeInfo.imageLinks === undefined ?
+                                    <img src={placeholder} style={{height: 192, width: 128}} alt="generic-thumbnail"/> : 
+                                    <img src={item.volumeInfo.imageLinks.thumbnail} alt="thumbnail"/>}
+                                    <p>By: {(item.volumeInfo.authors).join(", ")}</p>
+                                    
+                                </div>
                                 <div className="description">
                                     <p>{item.volumeInfo.description}</p>
+                                    <a href={item.volumeInfo.infoLink} target="_blank" rel="noreferrer">
+                                        View More on Google Books</a>
                                 </div>
-                                <a href={item.volumeInfo.infoLink} target="_blank" rel="noreferrer">
-                                    View on Google Books</a>
                             </div>
                             
                         )
                     })}
                 </ul>   
-            </div>
             ) : null}
         </div>
 
