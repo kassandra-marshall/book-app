@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 import '../BookList.css'
 import { Link } from "react-router-dom";
+import LoginLogout from "./LoginLogout";
 // import Book from "./Book";
 
 
@@ -41,7 +42,8 @@ function BookList() {
 
     return (
         
-        <div>
+        <div className="page">
+            <LoginLogout />
             <form onSubmit={(e) => handleSubmit(e)}>
                 <label>
                     Search books
