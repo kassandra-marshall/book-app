@@ -10,16 +10,19 @@ import { Link } from 'react-router-dom';
 function App() {
 
   return (
-    <div>
-        <body>
+    <body>
+    
+        <div>
             <Link to='/booklist'>Search Our Books</Link>
-        </body>
+        
         <Routes>
             <Route exact path="/" element={<LoginLogout />}/>
             <Route path='/booklist' element={<BookList />} />
-            <Route path=":id" element={<Book />}/>
+            <Route path="booklist/:id" element={<Book />}/>
         </Routes>
-    </div>    
+        </div>
+    </body>
+        
   );
 }
 

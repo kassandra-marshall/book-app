@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from "react-router";
 import axios from 'axios';
+import LoginLogout from './LoginLogout';
 
 function Book () {
     const params = useParams()
@@ -18,6 +19,7 @@ function Book () {
     return (
         bookData ? (
         <div>
+            <LoginLogout />
             <h1>{bookData.volumeInfo.title}</h1>
             <img src={bookData.volumeInfo.imageLinks.thumbnail} alt='thumbnail' />
             <p>By: {bookData.volumeInfo.authors}</p>
