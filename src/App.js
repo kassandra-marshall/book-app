@@ -10,9 +10,7 @@ import { Link } from 'react-router-dom';
 function App() {
 
   return (
-    <body>
-    
-        <div>
+    <div>
             <Link to='/booklist'>Search Our Books</Link>
         
         <Routes>
@@ -20,8 +18,7 @@ function App() {
             <Route path='/booklist' element={<BookList />} />
             <Route path="booklist/:id" element={<Book />}/>
         </Routes>
-        </div>
-    </body>
+    </div>
         
   );
 }

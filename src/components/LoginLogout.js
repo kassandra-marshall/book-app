@@ -1,13 +1,19 @@
 import React, {useEffect, useState} from "react";
 import { useGoogleLogin, googleLogout } from '@react-oauth/google';
 import axios from "axios";
+import { connect } from "react-redux";
+import { addToken, addUser } from "../actions/actions"; 
 
-function LoginLogout () {
+function LoginLogout (props) {
+    const { addToken, addUser } = props
     const [ user, setUser ] = useState([]);
     const [ profile, setProfile ] = useState();
   
     const login = useGoogleLogin({
-        onSuccess: (codeResponse) => setUser(codeResponse),
+        onSuccess: (codeResponse) => {
+            setUser(codeResponse) 
+            addUser(codeResponse.id)
+        },
         onError: (error) => console.log('Login Failed:', error)
     });
   
@@ -25,7 +31,10 @@ function LoginLogout () {
                         setProfile(res.data);
                     })
                     .catch((err) => console.log(err));
-            }
+                    
+                    addToken(user.access_token)
+
+                }
         },
         [ user ]
     );
@@ -36,6 +45,7 @@ function LoginLogout () {
         setProfile(null);
 
     }
+    
     return (
     <div>            
             {profile ? (
@@ -55,4 +65,12 @@ function LoginLogout () {
     )
 };
 
-export default LoginLogout;
+
+const mapStateToProps = state => {
+    return {
+        token: state.token,
+        userID: state.userID
+    }
+}
+
+export default connect(mapStateToProps, {addUser, addToken})(LoginLogout);

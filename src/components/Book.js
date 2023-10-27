@@ -15,7 +15,7 @@ function Book () {
         })
         .catch(err => {console.error(err)})
     }, []) //eslint-disable-line
-    // console.log(bookData.volumeInfo.imageLinks.thumbnail)
+    
     return (
         bookData ? (
         <div>

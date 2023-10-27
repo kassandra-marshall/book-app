@@ -4,13 +4,20 @@ import {BrowserRouter as Router} from 'react-router-dom'
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import './index.css';
 import App from './App';
+import { legacy_createStore as createStore } from 'redux';
+import reducer from './reducers';
+import { Provider } from 'react-redux';
 import reportWebVitals from './reportWebVitals';
+
+const store = createStore(reducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Router>
     <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
-      <App />
+      <Provider store={store}>
+        <App />
+      </Provider>
     </GoogleOAuthProvider>
   </Router>
 );
