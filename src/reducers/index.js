@@ -1,4 +1,4 @@
-import { ADD_TOKEN, ADD_USER } from "../actions/actions"
+import { ADD_TOKEN, ADD_USER, DELETE_USER } from "../actions/actions"
 export const initialstate = {
     token: '',
     userID: ''
@@ -15,6 +15,10 @@ const reducer = (state = initialstate, action) => {
             return {
                 ...state,
                 token: action.payload
+            }
+        case DELETE_USER: 
+            return {
+                state
             }
         default:
             return state;

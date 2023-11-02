@@ -2,17 +2,16 @@ import React, {useEffect, useState} from "react";
 import { useGoogleLogin, googleLogout } from '@react-oauth/google';
 import axios from "axios";
 import { connect } from "react-redux";
-import { addToken, addUser } from "../actions/actions"; 
+import { addToken, deleteUser } from "../actions/actions"; 
 
 function LoginLogout (props) {
-    const { addToken, addUser } = props
+    const { addToken } = props
     const [ user, setUser ] = useState([]);
     const [ profile, setProfile ] = useState();
   
     const login = useGoogleLogin({
         onSuccess: (codeResponse) => {
             setUser(codeResponse) 
-            addUser(codeResponse.id)
         },
         onError: (error) => console.log('Login Failed:', error)
     });
@@ -24,7 +23,9 @@ function LoginLogout (props) {
                     .get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
                         headers: {
                             Authorization: `Bearer ${user.access_token}`,
-                            Accept: 'application/json'
+                            Accept: 'application/json',
+                            // CLIENT_ID: process.env.REACT_APP_GOOGLE_CLIENT_ID,
+                            // CLIENT_SECRET: process.env.REACT_APP_GOOGLE_CLIENT_SECRET
                         }
                     })
                     .then((res) => {
@@ -32,17 +33,26 @@ function LoginLogout (props) {
                     })
                     .catch((err) => console.log(err));
                     
-                    addToken(user.access_token)
 
                 }
+
         },
         [ user ]
     );
-  
+
+    async function checkIfExists(user) {
+        await user;
+        if (user.access_token)
+            addToken(user.access_token)
+        if (user)
+            console.log(user)
+    }
+  checkIfExists(user);
   //   log out function to log the user out of google and set the profile array to null
     const logOut = () => {
         googleLogout();
         setProfile(null);
+        deleteUser()
 
     }
     
@@ -73,4 +83,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, {addUser, addToken})(LoginLogout);
+export default connect(mapStateToProps, {addToken, deleteUser})(LoginLogout);
