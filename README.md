@@ -1,6 +1,6 @@
-# Getting Started with Create React App
+# About Book App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was created to solve the problem of trying to find your next read. Too many books you're interested in? Our next step in this project is to build out bookshelves to organize your interests. 
 
 ## Available Scripts
 
@@ -39,32 +39,19 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
+## Redux
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+This project uses Redux to keep track of the user's token when navigating to different pages. This is still a work in progress.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Components:
 
-### Code Splitting
+- Book.js is the component that renders when a book is clicked on. The user also has an option to view the book details on Google Books official site.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- BookList.js is the component that renders a list of books from a user's search. 
 
-### Analyzing the Bundle Size
+- Bookshelves.js is the component that will render the list of bookshelves that has been created for and by the user. This is still a work in progress. The API requires a user ID which needs retrieval from the Google Books site. This might require showing the user how to access it using links and instructions or find a way to programmatically retrieve this for the user. 
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Next Steps
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- Continued work on styling for the main page.
+- Figure out course of action for Bookshelves.

@@ -3,6 +3,7 @@ import { useGoogleLogin, googleLogout } from '@react-oauth/google';
 import axios from "axios";
 import { connect } from "react-redux";
 import { addToken, deleteUser } from "../actions/actions"; 
+import { Link } from "react-router-dom";
 
 function LoginLogout (props) {
     const { addToken } = props
@@ -64,6 +65,7 @@ function LoginLogout (props) {
                     <h3>User Logged in</h3>
                     <p>Name: {profile.name}</p>
                     <p>Email Address: {profile.email}</p>
+                    <Link to='/bookshelves'>Bookshelves</Link>
                     <br />
                     <br />
                     <button onClick={logOut}>Log out</button>
@@ -78,8 +80,7 @@ function LoginLogout (props) {
 
 const mapStateToProps = state => {
     return {
-        token: state.token,
-        userID: state.userID
+        token: state.token
     }
 }
 
