@@ -11,8 +11,12 @@ import Bookshelves from './components/Bookshelves';
 function App() {
 
   return (
-    <div>
-            <Link to='/booklist'>Search Our Books</Link>
+    <div className='App'>
+      <h1>Book App</h1>
+      <p>Search books by clicking link below or sign in for more options</p>
+      <div className='link'>
+        <Link to='/booklist'>Search Our Books</Link>
+      </div>
         
         <Routes>
             <Route exact path="/" element={<LoginLogout />}/>
