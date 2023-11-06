@@ -1,7 +1,8 @@
-import { ADD_TOKEN, ADD_USER, DELETE_USER } from "../actions/actions"
+import { ADD_SEARCH_CONTENT, ADD_TOKEN, ADD_USER, CLEAR_SEARCH_CONTENT, DELETE_USER } from "../actions/actions"
 export const initialstate = {
     token: '',
-    userID: ''
+    userID: '',
+    terms: ''
 }
 
 const reducer = (state = initialstate, action) => {
@@ -18,7 +19,19 @@ const reducer = (state = initialstate, action) => {
             }
         case DELETE_USER: 
             return {
-                state
+                ...state,
+                token: '',
+                userID: ''
+            }
+        case ADD_SEARCH_CONTENT: 
+            return {
+                ...state,
+                terms: action.payload
+        }
+        case CLEAR_SEARCH_CONTENT:
+            return {
+                ...state,
+                terms: ''
             }
         default:
             return state;

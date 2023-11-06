@@ -1,61 +1,44 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
-import '../BookList.css'
+import '../styles/BookList.css'
 import { Link } from "react-router-dom";
 import LoginLogout from "./LoginLogout";
+import { connect } from "react-redux";
+import { clearTerms } from "../actions/actions";
 // import Book from "./Book";
 
-
-function BookList() {
+function BookList(props) {
+    const { clearTerms, terms } = props
     const url = 'https://www.googleapis.com/books/v1/volumes';
     const placeholder = 'https://minalsampat.com/wp-content/uploads/2019/12/book-placeholder.jpg';
     // use following in protected booklist component to add features such as saving to libraries
     // const apiKey = process.env.REACT_APP_GOOGLE_BOOKS_API_KEY;
     // const clientID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
     // const clientSecret = process.env.REACT_APP_GOOGLE_CLIENT_SECRET;
-    const [searchTerms, setSearchTerms] = useState("");
     const [searchResults, setSearchResults] = useState([]);
 
-    useEffect(() => {
-        
-    }, [searchTerms])
+    useEffect(() => {    
+            if (terms !== undefined){
+                axios.get(`${url}?q=${terms}`)
+                    .then(res => {
+                        setSearchResults(res.data.items)
+                        clearTerms()
+                    })
+                .catch(err => {
+                    console.error(err)
+                });
+            } else {
+                
+            }
+            
+    }, [terms, clearTerms])
     
-    const handleChange = (e) => {
-        setSearchTerms(e.target.value) 
-    }
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        axios.get(`${url}?q=${searchTerms}`)
-            .then(res => {
-                setSearchResults(res.data.items)
-            })
-            .catch(err => {
-                console.log(err)
-            });
-    }
     
-    // const handleClick = (e) => {
-    //     e.preventDefault();
-    //     // call book component and go to book link
-    //     <Book />
-    // }
-
     return (
         
         <div className="page">
             <LoginLogout />
-            <form onSubmit={(e) => handleSubmit(e)}>
-                <label>
-                    Search books
-                </label>
-                <input 
-                    placeholder="Search Here"
-                    name="search-term"
-                    onChange={handleChange}
-                />
-                <button>Search</button>
-            </form>
-            {searchResults ? (
+            {searchResults !== undefined ? (
                 <ul>
                     {searchResults.map(item => {
                         return (
@@ -68,7 +51,8 @@ function BookList() {
                                     {item.volumeInfo.imageLinks === undefined ?
                                     <img src={placeholder} style={{height: 192, width: 128}} alt="generic-thumbnail"/> : 
                                     <img src={item.volumeInfo.imageLinks.thumbnail} alt="thumbnail"/>}
-                                    <p>By: {(item.volumeInfo.authors).join(", ")}</p>
+                                    {typeof item.volumeInfo.authors === Array ? <p>By: {(item.volumeInfo.authors).join(", ")}</p> :
+                                    <p>By: {item.volumeInfo.authors}</p>}
                                     
                                 </div>
                                 <div className="description">
@@ -86,5 +70,10 @@ function BookList() {
 
     )
 }
+const mapStateToProps = state => {
+    return {
+        terms: state.terms
+    }
+}
 
-export default BookList;
+export default connect(mapStateToProps, {clearTerms})(BookList);

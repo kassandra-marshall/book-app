@@ -1,5 +1,8 @@
 .page {
     background-color: #e9edc9;
+    height: 80%;
+    width: 80%;
+    overflow: scroll;
 }
 
 .grid-container {
