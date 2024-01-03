@@ -1,8 +1,17 @@
 import { ADD_SEARCH_CONTENT, ADD_TOKEN, ADD_USER, CLEAR_SEARCH_CONTENT, DELETE_USER } from "../actions/actions"
 export const initialstate = {
     token: '',
-    userID: '',
-    terms: ''
+    user: {
+        email: '',
+        name: '',
+        image: ''
+    },
+    terms: '',
+    book: {
+        ID: '',
+        Title: '',
+        URL: ''
+    }
 }
 
 const reducer = (state = initialstate, action) => {
@@ -10,7 +19,7 @@ const reducer = (state = initialstate, action) => {
         case ADD_USER:
             return {
                 ...state,
-                userID: action.payload
+                user: action.payload
             }
         case ADD_TOKEN:
             return {
@@ -19,9 +28,13 @@ const reducer = (state = initialstate, action) => {
             }
         case DELETE_USER: 
             return {
-                ...state,
                 token: '',
-                userID: ''
+                user: {
+                    email: '',
+                    name: '',
+                    image: ''
+                },
+                terms: ''
             }
         case ADD_SEARCH_CONTENT: 
             return {

@@ -3,32 +3,39 @@ import { Routes, Route } from 'react-router-dom'
 import BookList from './components/BookList';
 import Book from './components/Book';
 import './App.css';
-import LoginLogout from './components/LoginLogout';
 import { Link } from 'react-router-dom';
-import Bookshelves from './components/Bookshelves';
 import Search from './components/Search';
+import { connect } from 'react-redux';
+import MyCollection from './components/MyCollection';
 
 
-function App() {
+
+function App(props) {  
 
   return (
     <div className='App'>
       <h1>Book App</h1>
-      <p>Search books by clicking link below or sign in for more options</p>
+      <p>Create Your Reading List Now</p>
       <div className='link'>
-        <Link to='/search' element={<Search />}>Search Our Books</Link>
-      </div>
-        
+        <Link to='/search' element={<Search />}>Search Our Books</Link> 
+        <Link to='/mycollection'>My Collection</Link>
+      </div>    
         <Routes>
-            <Route exact path="/" element={<LoginLogout />}/>
+            <Route exact path="/" element={<Search />} />
             <Route path='/search' element={<Search />} />
             <Route path='/booklist' element={<BookList />} />
-            <Route path="booklist/:id" element={<Book />}/>
-            <Route path="bookshelves" element={<Bookshelves />}/>
+            <Route path="/booklist/:id" element={<Book />}/>
+            <Route path="/mycollection" element={<MyCollection />} />
         </Routes>
     </div>
         
   );
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    token: state.token
+  }
+}
+
+export default connect(mapStateToProps, {})(App);

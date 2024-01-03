@@ -1,8 +1,8 @@
 export const ADD_USER = "ADD_USER";
 export const ADD_TOKEN = "ADD_TOKEN";
-export const DELETE_USER = "DELETE_USER"
-export const ADD_SEARCH_CONTENT = "ADD_SEARCH_CONTENT"
-export const CLEAR_SEARCH_CONTENT = "CLEAR_SEARCH_CONTENT" 
+export const DELETE_USER = "DELETE_USER";
+export const ADD_SEARCH_CONTENT = "ADD_SEARCH_CONTENT";
+export const CLEAR_SEARCH_CONTENT = "CLEAR_SEARCH_CONTENT";
 
 export function addUser(newUser) {
     return {type: ADD_USER, payload: newUser};

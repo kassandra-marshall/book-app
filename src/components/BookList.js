@@ -5,35 +5,39 @@ import { Link } from "react-router-dom";
 import LoginLogout from "./LoginLogout";
 import { connect } from "react-redux";
 import { clearTerms } from "../actions/actions";
-// import Book from "./Book";
 
 function BookList(props) {
     const { clearTerms, terms } = props
     const url = 'https://www.googleapis.com/books/v1/volumes';
     const placeholder = 'https://minalsampat.com/wp-content/uploads/2019/12/book-placeholder.jpg';
-    // use following in protected booklist component to add features such as saving to libraries
-    // const apiKey = process.env.REACT_APP_GOOGLE_BOOKS_API_KEY;
-    // const clientID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
-    // const clientSecret = process.env.REACT_APP_GOOGLE_CLIENT_SECRET;
     const [searchResults, setSearchResults] = useState([]);
 
     useEffect(() => {    
-            if (terms !== undefined){
-                axios.get(`${url}?q=${terms}`)
+        async function checkForTerms(searchTerms) {
+            await searchTerms
+            try {
+                axios.get(`${url}?q=${searchTerms}`)
                     .then(res => {
                         setSearchResults(res.data.items)
-                        clearTerms()
+                        
                     })
                 .catch(err => {
                     console.error(err)
                 });
-            } else {
-                
+            } catch (error) {
+                console.log('Something went wrong with Axios request')
             }
+        }
+        checkForTerms(terms)
             
-    }, [terms, clearTerms])
-    
-    
+    }, [terms])
+
+    useEffect(() => {
+        if(searchResults) {
+            clearTerms()
+        }
+    }, [searchResults])
+
     return (
         
         <div className="page">
@@ -44,10 +48,22 @@ function BookList(props) {
                         return (
                             <div className="grid-container">
 
-                                <div key={item.id} className="main">
+                                <div className="main">
                                     <Link to={`${item.id}`}>
-                                        <li>{item.volumeInfo.title}</li>
+                                        <li key={item.id}>{item.volumeInfo.title}</li>
                                     </Link>
+                                    <button onClick={(e) => {
+                                        e.preventDefault()
+                                        axios.post('http://localhost:9000/books', {
+                                            ID: item.id,
+                                            Title: item.volumeInfo.title,
+                                            URL: item.volumeInfo.infoLink
+                                        })
+                                            .then(res => {
+                                                console.log(res)
+                                            })
+                                            .catch(err => console.log(err))
+                                        }}>Add to My Collection</button>
                                     {item.volumeInfo.imageLinks === undefined ?
                                     <img src={placeholder} style={{height: 192, width: 128}} alt="generic-thumbnail"/> : 
                                     <img src={item.volumeInfo.imageLinks.thumbnail} alt="thumbnail"/>}
@@ -72,7 +88,7 @@ function BookList(props) {
 }
 const mapStateToProps = state => {
     return {
-        terms: state.terms
+        terms: state.terms,
     }
 }
 

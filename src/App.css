@@ -1,8 +1,11 @@
+body {
+  margin: 0;
+
+}
 .App {
   background-image: linear-gradient(to bottom right, pink, grey);
-  position: fixed;
-  height: 100%;
-  width: 100%;
+  width: 100vw;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -18,6 +21,8 @@ a {
 }
 
 .link {
+  display: flex;
+  justify-content: space-around;
   border-style: dashed;
   width: 90%;
   text-align: center;
